@@ -35,6 +35,7 @@ double get_det(double *initArray, int therow, int thecol) {
     if (therow != thecol) result = 0;
     else {
         result = 0;
+        //positive elements
         for(int idx = 0; idx<therow; idx++ ) {
                 tmp = (double) ( *(initArray + (idx*therow)+idx));
                 pos[0] = pos[0] * tmp;
@@ -50,8 +51,20 @@ double get_det(double *initArray, int therow, int thecol) {
                 if (co>=therow) co = 0;
             }
         }
+        //negative elements
+        for (int idx = 0; idx<thecol; idx++) {
+            co = idx;
+            tmp = 1.0;
+            for(ro=therow-1; ro>=0;ro--) {
+                tmp = (double) ( *(initArray + (ro*therow)+co));
+                neg[idx] = neg[idx] * tmp;
+                co = co + 1;
+                if (co>=thecol) co = 0;
+            }
+        }
+        //result
         for(int i=0; i<therow;i++) {
-            result = result + pos[i];
+            result = result + pos[i] - neg[i];
         }
 
     }
