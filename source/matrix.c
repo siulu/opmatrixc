@@ -1,42 +1,9 @@
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <math.h>
-
+#include <stdio.h>
 /*
-* format matrix
-* matrix [row][column]
+* matrix.c
+* common operation in matrix
 */
 
-
-double A[5][5] = {
-                        {2,3,4,5,1},
-                        {6,7,8,9,2},
-                        {1,2,3,4,3},
-                        {5,6,7,8,4},
-                        {1,2,3,4,3}
-                    };
-double matrix_det(double *initArray,int therow, int thecol);
-void matrix_print(double *initArray, int therow, int thecol);
-double *matrix_transpose(double *initArray, int therow, int thecol);
-double *matrix_identity(int therow, int thecol);
-
-int xx = sizeof(A)/sizeof(A[0]);
-int yy = sizeof(A[0])/sizeof(A[0][0]);
-
-int main() {
-    double *t_A;
-    double myresult = matrix_det((double *) &A[0], xx, yy);
-    printf("Hasil saya adalah %f\n\n\n",myresult);
-    matrix_print(&A[0],xx,yy);
-
-    printf("\n\n\n");
-    //t_A = matrix_transpose((double *) &A[0], xx, yy);
-    t_A = matrix_identity(xx, yy);
-
-    matrix_print(&t_A[0],xx,yy);
-
-    return 0;
-}
 
 /*
 * get determinant value of a therow x thecol matrix
@@ -132,25 +99,6 @@ double *matrix_identity(int therow, int thecol) {
         }
     }
     return idArray;
-}
-/*
-* gaus jordan elimination
-*/
-double matrix_gauss_jordan_elimination(double *initArray, int therow, int thecol) {
-    double *gjArray, *iArray;
-    double m;
-
-    iArray = matrix_identity(therow, thecol);
-
-    for(int i=0;i<thecol;i++) {
-        for(int j=0;j<therow;j++) {
-            //elimination process take place except for the diagonal
-            if(i != j) m = - (*(idArray + (i*therow)+j)) / (*(idArray + (i*thecol)+i));
-            for ()
-        }
-    }
-
-    return gjArray;
 }
 /*
 * return inverse of a matrix

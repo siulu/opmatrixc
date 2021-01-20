@@ -1,0 +1,5 @@
+gcc -c matrix.c
+ar rs libmatrix.a matrix.o
+gcc -c testmatrix.c
+gcc -o testmatrix testmatrix.o libmatrix.a
+./testmatrix
