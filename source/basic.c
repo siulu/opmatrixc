@@ -11,7 +11,7 @@ typedef struct {
 	double deteminan;
 } Summary;
 
-double A[6][6] = {
+double A[][6] = {
                         {2,3,4,5,1,2.4},
                         {6,7,8,9,2,3.5},
                         {1,2,3,4,3,3.2},
@@ -24,7 +24,6 @@ void matrix_print(double *initArray, int therow, int thecol);
 double *matrix_transpose(double *initArray, int therow, int thecol);
 double *matrix_identity(int therow, int thecol);
 double *matrix_gauss_jordan_elimination(double *initArray, int therow, int thecol);
-int *array_size(double *initArray);
 
 
 int main() {
@@ -32,19 +31,16 @@ int main() {
     int yy = sizeof(A[0])/sizeof(A[0][0]);
     double *t_A;
     double *t_B;
-    int *t_S;
     //double myresult = matrix_det((double *) &A[0], xx, yy);
     //printf("Hasil saya adalah %f\n\n\n",myresult);
     //printf("apalah : %i and %i\n\n\n",xx,yy);
-    t_S=array_size((double *)A);
     matrix_print((double *) &A[0],xx,yy);
-    printf("%i , %i \n\n",t_S[0],t_S[1]);
 
     printf("\n\n\n");
-    //t_A = matrix_transpose((double *) &A[0], xx, yy);
+    t_A = matrix_transpose((double *) &A[0], xx, yy);
     //t_A = matrix_identity(xx, yy);
 
-    //matrix_print((double *) &t_A[0],xx,yy);
+    matrix_print((double *) &t_A[0],xx,yy);
 
     //t_B = matrix_gauss_jordan_elimination((double *) &A[0], xx, yy);
 
@@ -148,6 +144,7 @@ double *matrix_identity(int therow, int thecol) {
     }
     return idArray;
 }
+/*
 int *array_size(double *initArray) {
     int *arraySize;
     //int xx = sizeof(A)/sizeof(A[0]);
@@ -158,6 +155,7 @@ int *array_size(double *initArray) {
     *(arraySize+1)=0;
     return arraySize;
 }
+*/
 /*
 * gaus jordan elimination
 */
