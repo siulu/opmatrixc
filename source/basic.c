@@ -1,6 +1,5 @@
 #include <stdio.h>
-//#include <stdlib.h>
-//#include <math.h>
+#include <stdlib.h>
 
 /*
 * format matrix
@@ -11,13 +10,13 @@ typedef struct {
 	double deteminan;
 } Summary;
 
-double A[][6] = {
-                        {2,3,4,5,1,2.4},
-                        {6,7,8,9,2,3.5},
-                        {1,2,3,4,3,3.2},
-                        {5,6,7,8,4,2.2},
-                        {1,2,3,4,3,3.3},
-                        {3,5,3,2,6,4.5}
+double A[6][6] = {
+                        {2.0,3.0,4.0,5.0,1,2.4},
+                        {6.0,7.0,8.0,9.0,2.0,3.5},
+                        {1.0,2.0,3.0,4.0,3.0,3.2},
+                        {5.0,6.0,7.0,8.0,4.0,2.2},
+                        {1.0,2.0,3.0,4.0,3.0,3.3},
+                        {3.0,5.0,3.0,2.0,6.0,4.5}
                     };
 double matrix_det(double *initArray,int therow, int thecol);
 void matrix_print(double *initArray, int therow, int thecol);
@@ -27,25 +26,33 @@ double *matrix_gauss_jordan_elimination(double *initArray, int therow, int theco
 
 
 int main() {
+    int sizeA = sizeof(A);
     int xx = sizeof(A)/sizeof(A[0]);
     int yy = sizeof(A[0])/sizeof(A[0][0]);
-    double *t_A;
-    double *t_B;
+    
+    double* t_B;
+    t_B = malloc(sizeA);
     //double myresult = matrix_det((double *) &A[0], xx, yy);
     //printf("Hasil saya adalah %f\n\n\n",myresult);
-    //printf("apalah : %i and %i\n\n\n",xx,yy);
-    matrix_print((double *) &A[0],xx,yy);
-
-    printf("\n\n\n");
+    printf("apalah : %i and %i\n\n\n",xx,yy);
+    
+    ///////////t_B = matrix_gauss_jordan_elimination((double *) &A[0], xx, yy);
+    t_B = matrix_identity(yy, xx);
+    matrix_print((double *) &t_B[0],xx,yy);
+    printf("\nOk\n");
+    //matrix_print((double *) &A[0],xx,yy);
+    printf("\n\n");
+    //matrix_print((double *) &t_B[0],xx,yy);
+    printf("\nOk\n");
+    double* t_A;
+    t_A =(double*) malloc(sizeA);
     t_A = matrix_transpose((double *) &A[0], xx, yy);
-    //t_A = matrix_identity(xx, yy);
-
     matrix_print((double *) &t_A[0],xx,yy);
-
-    //t_B = matrix_gauss_jordan_elimination((double *) &A[0], xx, yy);
-
-    //matrix_print(&t_B[0],xx,yy);
-
+    printf("\n\n");
+    matrix_print((double *) &A[0],xx,yy);
+    //matrix_print((double *) &A[0],xx,yy);
+    free(&t_B[0]); 
+    
     return 0;
 }
 
@@ -131,10 +138,10 @@ double *matrix_transpose(double *initArray, int therow, int thecol ) {
 */
 double *matrix_identity(int therow, int thecol) {
     double *idArray;
-    *(idArray) = 1.0; // i tried to include this a[0][0]=1.0 into the for loop but does not work
+    //*(idArray) = 1.0; // i tried to include this a[0][0]=1.0 into the for loop but does not work
     for (int i = 0;i<thecol;i++) {
-        for(int j = 1;j<therow;j++) {
-            if (i=j) {
+        for(int j = 0;j<therow;j++) {
+            if (i==j) {
                 *(idArray + (i*therow)+j) = 1.0;
             }
             else {
@@ -165,7 +172,7 @@ double *matrix_gauss_jordan_elimination(double *initArray, int therow, int theco
     double m;
 
     iArray = matrix_identity(therow, thecol);
-
+    /*
     for(int i=0;i<thecol;i++) {
         for(int j=0;j<therow;j++) {
             //elimination process take place except for the diagonal
@@ -178,7 +185,7 @@ double *matrix_gauss_jordan_elimination(double *initArray, int therow, int theco
             }
         }
     }
-
+    */
     return iArray;
 }
 /*
