@@ -31,13 +31,14 @@ int main() {
     int yy = sizeof(A[0])/sizeof(A[0][0]);
     
     double* t_B;
-    t_B = malloc(sizeA);
+    //t_B = malloc(sizeA);
+    //t_B =malloc(sizeA*sizeof *t_B);
     //double myresult = matrix_det((double *) &A[0], xx, yy);
-    //printf("Hasil saya adalah %f\n\n\n",myresult);
-    printf("apalah : %i and %i\n\n\n",xx,yy);
+    //printf("determinan matrix A adalah %f\n\n\n",myresult);
+    //printf("apalah : %i and %i\n\n\n",xx,yy);
     
     ///////////t_B = matrix_gauss_jordan_elimination((double *) &A[0], xx, yy);
-    t_B = matrix_identity(yy, xx);
+    t_B = matrix_identity(xx, yy);
     matrix_print((double *) &t_B[0],xx,yy);
     printf("\nOk\n");
     //matrix_print((double *) &A[0],xx,yy);
@@ -45,15 +46,16 @@ int main() {
     //matrix_print((double *) &t_B[0],xx,yy);
     printf("\nOk\n");
     double* t_A;
-    t_A =(double*) malloc(sizeA);
+    //t_A = (double *)malloc(sizeA*sizeof(double));;
     t_A = matrix_transpose((double *) &A[0], xx, yy);
-    matrix_print((double *) &t_A[0],xx,yy);
+    matrix_print((double *) &t_A[0],yy,yy);
     printf("\n\n");
     matrix_print((double *) &A[0],xx,yy);
-    //matrix_print((double *) &A[0],xx,yy);
-    free(&t_B[0]); 
     
-    return 0;
+    
+    //matrix_print((double *) &A[0],xx,yy);
+
+    return EXIT_SUCCESS;
 }
 
 /*
@@ -61,7 +63,7 @@ int main() {
 */
 double matrix_det(double *initArray, int therow, int thecol) {
     double result;
-    double *posarr, *negarr;
+    //double *posarr, *negarr;
     int ro, co;
     double pos[therow], neg[therow];
     double tmp = 0.0;
@@ -125,22 +127,23 @@ void matrix_print(double *initArray, int therow, int thecol) {
 */
 
 double *matrix_transpose(double *initArray, int therow, int thecol ) {
-    double *tArray;
-    for(int i = 0; i<thecol;i++) {
-        for(int j=0;j<therow;j++) {
+    double* tArray = malloc(therow*thecol*sizeof(double));
+    for(size_t i = 0; i<thecol;i++) {
+        for(size_t j=0;j<therow;j++) {
             *(tArray + (j*therow)+i) = (double) ( *(initArray + (i*therow)+j));
         }
     }
+    free(tArray);
     return tArray;
 }
 /*
 *
 */
 double *matrix_identity(int therow, int thecol) {
-    double *idArray;
+    double* idArray = malloc(therow*thecol*sizeof(double));;
     //*(idArray) = 1.0; // i tried to include this a[0][0]=1.0 into the for loop but does not work
-    for (int i = 0;i<thecol;i++) {
-        for(int j = 0;j<therow;j++) {
+    for (size_t i = 0;i<thecol;i++) {
+        for(size_t j = 0;j<therow;j++) {
             if (i==j) {
                 *(idArray + (i*therow)+j) = 1.0;
             }
@@ -149,6 +152,7 @@ double *matrix_identity(int therow, int thecol) {
             }
         }
     }
+    free(idArray);
     return idArray;
 }
 /*
@@ -156,9 +160,9 @@ int *array_size(double *initArray) {
     int *arraySize;
     //int xx = sizeof(A)/sizeof(A[0]);
     //int yy = sizeof(A[0])/sizeof(A[0][0]);
-    //*arraySize=sizeof(initArray)/sizeof(initArray[0]);
+    *arraySize=sizeof(initArray)/sizeof(initArray[0]);
     *arraySize=0;
-    //*(arraySize+1)=sizeof(initArray[0])/sizeof(initArray[0][0]);
+    *(arraySize+1)=sizeof(initArray[0])/sizeof(initArray[0][0]);
     *(arraySize+1)=0;
     return arraySize;
 }
@@ -166,13 +170,14 @@ int *array_size(double *initArray) {
 /*
 * gaus jordan elimination
 */
+/*
 double *matrix_gauss_jordan_elimination(double *initArray, int therow, int thecol) {
     double *gjArray;
     double *iArray;
     double m;
 
     iArray = matrix_identity(therow, thecol);
-    /*
+    
     for(int i=0;i<thecol;i++) {
         for(int j=0;j<therow;j++) {
             //elimination process take place except for the diagonal
@@ -185,15 +190,14 @@ double *matrix_gauss_jordan_elimination(double *initArray, int therow, int theco
             }
         }
     }
-    */
+    
     return iArray;
 }
+*/
 /*
 * return inverse of a matrix
 * follows Gauss Jordan elimination metods on calculating matrix inverse
 */
-double *matrix_inverse_GJ(double *initArray, int therow, int thecol) {
-    double *iArray;
-    return iArray;
-}
+//double *matrix_inverse_GJ(double *initArray, int therow, int thecol) {//    double *iArray;//    return iArray;
+//}
 
