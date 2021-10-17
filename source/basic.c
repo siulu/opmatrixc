@@ -31,30 +31,19 @@ int main() {
     int yy = sizeof(A[0])/sizeof(A[0][0]);
     
     double* t_B;
-    //t_B = malloc(sizeA);
-    //t_B =malloc(sizeA*sizeof *t_B);
-    //double myresult = matrix_det((double *) &A[0], xx, yy);
-    //printf("determinan matrix A adalah %f\n\n\n",myresult);
-    //printf("apalah : %i and %i\n\n\n",xx,yy);
-    
-    ///////////t_B = matrix_gauss_jordan_elimination((double *) &A[0], xx, yy);
+    double myresult = matrix_det((double *) &A[0], xx, yy);
+    printf("determinan matrix A adalah %f\n\n\n",myresult);
     t_B = matrix_identity(xx, yy);
     matrix_print((double *) &t_B[0],xx,yy);
-    printf("\nOk\n");
-    //matrix_print((double *) &A[0],xx,yy);
     printf("\n\n");
-    //matrix_print((double *) &t_B[0],xx,yy);
-    printf("\nOk\n");
     double* t_A;
-    //t_A = (double *)malloc(sizeA*sizeof(double));;
     t_A = matrix_transpose((double *) &A[0], xx, yy);
     matrix_print((double *) &t_A[0],yy,yy);
     printf("\n\n");
     matrix_print((double *) &A[0],xx,yy);
-    
-    
-    //matrix_print((double *) &A[0],xx,yy);
-
+    printf("\n\n");
+    free(t_B);
+    free(t_A);
     return EXIT_SUCCESS;
 }
 
@@ -133,15 +122,13 @@ double *matrix_transpose(double *initArray, int therow, int thecol ) {
             *(tArray + (j*therow)+i) = (double) ( *(initArray + (i*therow)+j));
         }
     }
-    //free(tArray);
     return tArray;
 }
 /*
-*
+* return matrix identity
 */
 double *matrix_identity(int therow, int thecol) {
     double* idArray = (double *)malloc(therow*thecol*sizeof(double));
-    //*(idArray) = 1.0; // i tried to include this a[0][0]=1.0 into the for loop but does not work
     for (int i = 0;i<thecol;i++) {
         for(int j = 0;j<therow;j++) {
             if (i==j) {
@@ -152,21 +139,9 @@ double *matrix_identity(int therow, int thecol) {
             }
         }
     }
-    //free(idArray);
     return idArray;
 }
-/*
-int *array_size(double *initArray) {
-    int *arraySize;
-    //int xx = sizeof(A)/sizeof(A[0]);
-    //int yy = sizeof(A[0])/sizeof(A[0][0]);
-    *arraySize=sizeof(initArray)/sizeof(initArray[0]);
-    *arraySize=0;
-    *(arraySize+1)=sizeof(initArray[0])/sizeof(initArray[0][0]);
-    *(arraySize+1)=0;
-    return arraySize;
-}
-*/
+
 /*
 * gaus jordan elimination
 */
@@ -194,10 +169,5 @@ double *matrix_gauss_jordan_elimination(double *initArray, int therow, int theco
     return iArray;
 }
 */
-/*
-* return inverse of a matrix
-* follows Gauss Jordan elimination metods on calculating matrix inverse
-*/
-//double *matrix_inverse_GJ(double *initArray, int therow, int thecol) {//    double *iArray;//    return iArray;
-//}
+
 

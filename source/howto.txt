@@ -3,3 +3,6 @@ ar rs libmatrix.a matrix.o
 gcc -c testmatrix.c
 gcc -o testmatrix testmatrix.o libmatrix.a
 ./testmatrix
+
+check with valgrind
+valgrind --leak-check=full --show-leak-kinds=all ./basicsekali
