@@ -26,7 +26,7 @@ double *matrix_gauss_jordan_elimination(double *initArray, int therow, int theco
 
 
 int main() {
-    int sizeA = sizeof(A);
+    //int sizeA = sizeof(A);
     int xx = sizeof(A)/sizeof(A[0]);
     int yy = sizeof(A[0])/sizeof(A[0][0]);
     
@@ -128,22 +128,22 @@ void matrix_print(double *initArray, int therow, int thecol) {
 
 double *matrix_transpose(double *initArray, int therow, int thecol ) {
     double* tArray = malloc(therow*thecol*sizeof(double));
-    for(size_t i = 0; i<thecol;i++) {
-        for(size_t j=0;j<therow;j++) {
+    for(int i = 0; i<thecol;i++) {
+        for(int j=0;j<therow;j++) {
             *(tArray + (j*therow)+i) = (double) ( *(initArray + (i*therow)+j));
         }
     }
-    free(tArray);
+    //free(tArray);
     return tArray;
 }
 /*
 *
 */
 double *matrix_identity(int therow, int thecol) {
-    double* idArray = malloc(therow*thecol*sizeof(double));;
+    double* idArray = (double *)malloc(therow*thecol*sizeof(double));
     //*(idArray) = 1.0; // i tried to include this a[0][0]=1.0 into the for loop but does not work
-    for (size_t i = 0;i<thecol;i++) {
-        for(size_t j = 0;j<therow;j++) {
+    for (int i = 0;i<thecol;i++) {
+        for(int j = 0;j<therow;j++) {
             if (i==j) {
                 *(idArray + (i*therow)+j) = 1.0;
             }
@@ -152,7 +152,7 @@ double *matrix_identity(int therow, int thecol) {
             }
         }
     }
-    free(idArray);
+    //free(idArray);
     return idArray;
 }
 /*
