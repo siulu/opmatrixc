@@ -18,15 +18,28 @@ double A[6][6] = {
                         {1.0,2.0,3.0,4.0,3.0,3.3},
                         {3.0,5.0,3.0,2.0,6.0,4.5}
                     };
+double MM[3][3] = {{6.0,9.0,8},
+                   {10,7,11},
+                   {12,5,2}
+                  };
+double NN[5][5] = {
+    {7,5,3,8,6},
+    {13,10,9,11,12},
+    {4,14,15,16,17},
+    {18,19,20,21,22},
+    {23,2,24,25,26}
+};
 double matrix_det(double *initArray,int therow, int thecol);
 void matrix_print(double *initArray, int therow, int thecol);
 double *matrix_transpose(double *initArray, int therow, int thecol);
 double *matrix_identity(int therow, int thecol);
 double *matrix_gauss_jordan_elimination(double *initArray, int therow, int thecol);
+double *matrix_inverse(double *initArray, int therow, int thecol);
 
 
 int main() {
     //int sizeA = sizeof(A);
+    
     int xx = sizeof(A)/sizeof(A[0]);
     int yy = sizeof(A[0])/sizeof(A[0][0]);
     
@@ -38,9 +51,14 @@ int main() {
     printf("\n\n");
     double* t_A;
     t_A = matrix_transpose((double *) &A[0], xx, yy);
-    matrix_print((double *) &t_A[0],yy,yy);
+    matrix_print((double *) &t_A[0],xx,yy);
     printf("\n\n");
     matrix_print((double *) &A[0],xx,yy);
+    printf("\n\n");
+    
+    double* t_C;
+    t_C=matrix_inverse((double *) &NN[0], 5, 5);
+    matrix_print((double *) &t_C[0],5,5);
     printf("\n\n");
     free(t_B);
     free(t_A);
@@ -141,33 +159,49 @@ double *matrix_identity(int therow, int thecol) {
     }
     return idArray;
 }
-
 /*
-* gaus jordan elimination
+* The inverse of a matrix A is a matrix that, when multiplied by A results in the identity
+* this matrix inverse below applied gauss jordan elimination
 */
-/*
-double *matrix_gauss_jordan_elimination(double *initArray, int therow, int thecol) {
-    double *gjArray;
-    double *iArray;
-    double m;
-
-    iArray = matrix_identity(therow, thecol);
+double *matrix_inverse(double *initArray, int therow, int thecol) {
+    double* aArray = malloc(therow*thecol*sizeof(double));
+    aArray = initArray;
     
-    for(int i=0;i<thecol;i++) {
-        for(int j=0;j<therow;j++) {
-            //elimination process take place except for the diagonal
-            if(i != j) {
-                m = - (*(initArray + (i*therow)+j)) / (*(initArray + (i*thecol)+i));
-                for (int k=j;k<thecol;k++) {
-                    *(initArray+(j*therow)+k) = *(initArray+(j*therow)+k) + m*(*(initArray+(i*therow)+k));
-                    *(iArray+(j*therow)+k) = *(iArray+(j*therow)+k) + m*(*(iArray+(i*therow)+k));
+    double m,a1,a2,b1,b2;
+    //bArray init with matrix identity.
+    double* bArray;
+    bArray = matrix_identity(therow, thecol);
+    for(int i = 0; i<thecol;i++) {
+        for(int j = 0; j<therow;j++) {
+            /*elimination except for the diagonal elements*/
+            if(i!=j) {
+                m = *(aArray + (j*therow)+i) / (*(aArray + (i*therow)+i));
+                for(int k = 0;k<thecol;k++) {
+                    a1 = *(aArray + (j*therow)+k); 
+                    a2 = *(aArray + (i*therow)+k);
+                    b1 = *(bArray + (j*therow)+k);
+                    b2 = *(bArray + (i*therow)+k);
+                    *(aArray + (j*therow)+k)= a1 - m*a2;
+                    *(bArray + (j*therow)+k)= b1 - m*b2;
+
                 }
             }
         }
     }
+    /*finishing*/
+    for(int j=0;j<therow;j++) {
+        for(int k=0;k<thecol;k++){
+            b1 = *(bArray + (j*therow)+k);
+            a1 = *(aArray + (j*therow)+j);
+            *(bArray + (j*therow)+k) = b1 / a1;
+            //*(aArray + (k*therow)+k) = 1.0;
+        }
+        *(aArray + (j*therow)+j) = 1.0;
+    }
     
-    return iArray;
+    
+    
+    return bArray;
 }
-*/
 
 
