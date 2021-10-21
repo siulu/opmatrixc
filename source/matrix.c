@@ -164,3 +164,33 @@ double *matrix_minor(double *initArray, int therow, int thecol, int mi, int mj) 
     }
     return mArray;
 }
+/*
+* special matrix, return matrix containing a certain uniform value, does not have to be square matrix
+*/
+double *matrix_uniform(int therow, int thecol, double uvalue) {
+    double* aArray = malloc(therow*thecol*sizeof(double));
+    for (int i=0;i<thecol;i++) {
+        for (int j=0;j<therow;j++) {
+            *(aArray+(j*therow)+i) = uvalue;
+        }
+    }
+    return aArray;
+}
+/*
+* matrix diagonal extracted from input matrix, return same size matrix with the input, with only diagonal element of the
+* input matrix and the rest are zero
+* lets call this matrix diagonal right
+*/
+double *matrix_diagonal_right(double *initArray, int therow, int thecol) {
+    double* aArray = malloc(therow*thecol*sizeof(double));
+    for(int i=0;i<thecol;i++) {
+        for(int j=0;j<thecol;j++) {
+            if(i==j) {
+                *(aArray+(j*therow)+i) = *(initArray+(j*therow)+i);
+            } else (
+                *(aArray+(j*therow)+i) = 0.0;
+            )
+        }
+    }
+    return aArray;
+}
