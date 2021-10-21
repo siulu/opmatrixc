@@ -35,6 +35,7 @@ double *matrix_transpose(double *initArray, int therow, int thecol);
 double *matrix_identity(int therow, int thecol);
 double *matrix_gauss_jordan_elimination(double *initArray, int therow, int thecol);
 double *matrix_inverse(double *initArray, int therow, int thecol);
+double *matrix_minor(double *initArray, int therow, int thecol, int mi, int mj);
 
 
 int main() {
@@ -57,11 +58,12 @@ int main() {
     printf("\n\n");
     
     double* t_C;
-    t_C=matrix_inverse((double *) &NN[0], 5, 5);
-    matrix_print((double *) &t_C[0],5,5);
+    t_C=matrix_minor((double *) &NN[0], 5, 5,0,2);
+    matrix_print((double *) &t_C[0],4,4);
     printf("\n\n");
     free(t_B);
     free(t_A);
+    free(t_C);
     return EXIT_SUCCESS;
 }
 
@@ -194,14 +196,33 @@ double *matrix_inverse(double *initArray, int therow, int thecol) {
             b1 = *(bArray + (j*therow)+k);
             a1 = *(aArray + (j*therow)+j);
             *(bArray + (j*therow)+k) = b1 / a1;
-            //*(aArray + (k*therow)+k) = 1.0;
         }
         *(aArray + (j*therow)+j) = 1.0;
     }
-    
-    
-    
     return bArray;
 }
-
+/*
+* Minor element of a matrix
+* return matrix minor of matrix A against index matrix A[mi][mj]
+* will return new matrix M[therow-1][thecol-1]
+*/
+double *matrix_minor(double *initArray, int therow, int thecol, int mi, int mj) {
+    int m,n,mfix,nfix;
+    mfix = therow-1; nfix=thecol-1;
+    double* mArray = (double *)malloc((mfix)*(nfix)*sizeof(double));
+    m=0;n=0;
+    for(int i=0;i<thecol;i++) {
+        for(int j=0;j<therow;j++) {
+            if(j!=mi && i!=mj) {
+                *(mArray + (m*mfix)+n) = *(initArray + (j*therow)+i);
+                m+=1;
+                if(m==nfix) {
+                    m=0;
+                    n+=1;
+                }
+            }
+        }
+    }
+    return mArray;
+}
 
