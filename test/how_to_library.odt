@@ -1,0 +1,18 @@
+﻿opmatrixc/source$ gcc -fPIC -c matrix.c
+matrix.o created
+opmatrixc/source$ gcc -shared -o libmatrix.so matrix.o
+total 52
+-rw-rw-r-- 1 xxxx    59 Jan 12  2021 basicmatrix.c
+-rw-rw-r-- 1 xxxx   203 Okt 17 17:20 howto.txt
+-rw-rw-r-- 1 xxxx     1 Nov 17  2020 init.c
+-rwxrwxr-x 1 xxxx 16656 Okt 22 21:38 libmatrix.so
+-rw-rw-r-- 1 xxxx  5659 Okt 22 21:36 matrix.c
+-rw-rw-r-- 1 xxxx   570 Okt 22 07:23 matrix.h
+-rw-rw-r-- 1 xxxx  5824 Okt 22 21:36 matrix.o
+
+new so file created libmatrix.so
+
+try to compile test file
+opmatrixc/source$ gcc -c ../test/mat2dtest.c -o ../test/mat2dtest.o
+
+opmatrixc/source$ gcc -o mat2dtest ../test/mat2dtest.o libmatrix.so

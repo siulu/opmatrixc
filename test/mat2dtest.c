@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "matrix.h"
+#include "../source/matrix.h"
 
 /*
 * format matrix
@@ -51,8 +51,8 @@ int main() {
     printf("\n\n");
     
     double* t_C;
-    t_C=matrix_minor((double *) &NN[0], 5, 5,0,2);
-    matrix_print((double *) &t_C[0],4,4);
+    t_C=matrix_uniform(5, 5,0.5);
+    matrix_print_with_index((double *) &t_C[0],5,5);
     printf("\n\n");
     free(t_B);
     free(t_A);

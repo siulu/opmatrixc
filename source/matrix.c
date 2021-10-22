@@ -187,10 +187,21 @@ double *matrix_diagonal_right(double *initArray, int therow, int thecol) {
         for(int j=0;j<thecol;j++) {
             if(i==j) {
                 *(aArray+(j*therow)+i) = *(initArray+(j*therow)+i);
-            } else (
+            } else {
                 *(aArray+(j*therow)+i) = 0.0;
-            )
+            }
         }
     }
     return aArray;
+}
+/*
+* print 2d matrix with index number
+*/
+void matrix_print_with_index(double *initArray, int therow, int thecol) {
+    for (int i=0;i<therow;i++) {
+        for (int j=0;j<thecol;j++) {
+            printf("A[%i][%i]=%f;  ",j,i,( *(initArray + (i*therow)+j)));
+        }
+        printf("\n");
+    }
 }
