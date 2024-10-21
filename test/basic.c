@@ -71,54 +71,34 @@ int main() {
 * get determinant value of a therow x thecol matrix
 */
 double matrix_det(double *initArray, int therow, int thecol) {
-    double result;
-    //double *posarr, *negarr;
-    int ro, co;
-    double pos[therow], neg[therow];
-    double tmp = 0.0;
-
-    for (int i=0;i<therow;i++) {
-        pos[i] = 1.0;
-        neg[i] = 1.0;
+    if (thecol == 1) {
+        return initArray[therow];
     }
 
-    if (therow != thecol) result = 0;
-    else {
-        result = 0;
-        //positive elements
-        for(int idx = 0; idx<therow; idx++ ) {
-                tmp = (double) ( *(initArray + (idx*therow)+idx));
-                pos[0] = pos[0] * tmp;
-        }
+    double det = 0.0;
+    double *submatrix = (double *)malloc((thecol - 1) * (thecol - 1) * sizeof(double));
 
-        for (int idx = 1; idx<therow; idx++) {
-            co = idx;
-            tmp = 1.0;
-            for(ro=0; ro<therow;ro++) {
-                tmp = (double) ( *(initArray + (ro*therow)+co));
-                pos[idx] = pos[idx] * tmp;
-                co = co + 1;
-                if (co>=therow) co = 0;
+    for (int i = 0; i < thecol; i++) {
+        int minor_row = 0, minor_col = 0;
+        for (int j = 0; j < thecol; j++) {
+            if (j != therow) {
+                for (int k = 0; k < thecol; k++) {
+                    if (k != i) {
+                        submatrix[minor_row * (thecol - 1) + minor_col] = matrix[j * thecol + k];
+                        minor_col++;
+                    }
+                }
+                minor_row++;
+                minor_col = 0;
             }
         }
-        //negative elements
-        for (int idx = 0; idx<thecol; idx++) {
-            co = idx;
-            tmp = 1.0;
-            for(ro=therow-1; ro>=0;ro--) {
-                tmp = (double) ( *(initArray + (ro*therow)+co));
-                neg[idx] = neg[idx] * tmp;
-                co = co + 1;
-                if (co>=thecol) co = 0;
-            }
-        }
-        //result
-        for(int i=0; i<therow;i++) {
-            result = result + pos[i] - neg[i];
-        }
 
+        det += initArray[therow * thecol + i] * pow(-1, therow + i) * determinant(submatrix, col - 1, minor_row, minor_col);
     }
-    return result;
+
+    free(submatrix);
+
+    return det;
 }
 /*
 * print 2d matrix
